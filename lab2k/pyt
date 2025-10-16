@@ -1,0 +1,34 @@
+from PIL import Image
+import  numpy as np
+
+# ---------- wczytywanie obrazu zapisanego w różnych formatach .bmp, .jpg, .png oraz pobieranie informacji o obrazie  -------------------
+obrazek = Image.open("Inicjały.bmp")  # wczytywanie obrazu
+print("---------- informacje o obrazie")
+print("tryb:", obrazek.mode)
+print("format:", obrazek.format)
+print("rozmiar:", obrazek.size)
+# ---------- wczytywanie obrazu do tablicy oraz pobieranie informacji o tablicach ------------------------------
+
+dane_obrazka = np.asarray(obrazek)
+print("---------------- informacje o tablicy obrazu----------------")
+print("typ danych tablicy:", dane_obrazka.dtype)  # typ danych przechowywanych w tablicy
+print("rozmiar tablicy:", dane_obrazka.shape)  # rozmiar tablicy - warto porównac z rozmiarami obrazka
+def rysuj_paski_w_obrazie(obrazek, grub): # rysuje pionowy pas grubości grub po lewej stronie oraz po prawej stronie
+    tab_obraz = np.asarray(obrazek).astype(np.uint8) # wczytanie tablicy obrazu i zamiana na int
+    h, w = tab_obraz.shape
+    for i in range(h):
+        for j in range(grub):
+            tab_obraz[i][j]=0   
+        for j in range(w-grub,w):
+            tab_obraz[i][j]=0
+    tab = tab_obraz.astype(bool) # zapisanie tablicy w typie bool (obrazy czarnobiałe)
+    return Image.fromarray(tab)
+rysuj_paski_w_obrazie(obrazek, 10)
+def rysuj_ramke(w, h, grub): # grub grubość ramki w pikselach
+    t = (h, w)  # rozmiar tablicy
+    tab = np.ones(t, dtype=np.uint8)  # deklaracja tablicy wypełnionej zerami - czarna
+    tab[grub:h - grub, grub:w - grub] = 0  # skrócona wersja ustawienia wartości dla prostokatnego fragmentu tablicy [zakresy wysokości, zakresy szerokości] tablicy
+    tab1 = tab.astype(np.bool_)
+    return Image.fromarray(tab1)
+wynik = rysuj_ramke(200,100,20)
+wynik.show()
