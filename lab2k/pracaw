@@ -36,19 +36,6 @@ def rysuj_ramke(w, h, grub): # grub grubość ramki w pikselach
     return Image.fromarray(tab1)
 
 #Zad 2.1
-def rysuj_pasy_poziome(w, h, grub):  # w, h   -  rozmiar obrazu
-    t = (h, w)  # rozmiar tablicy
-    tab = np.ones(t, dtype=np.uint8)
-    # jaki bedzie efekt, gdy np.ones zamienimy na np.zeros?
-    ile =  int(h/grub)  # liczba pasów  o grubości grub
-    for k in range(ile):  # uwaga k = 0,1,2..   bez ile
-        for g in range(grub):
-            i = k * grub + g  # i - indeks wiersza, j - indeks kolumny
-            for j in range(w):
-                tab[i, j] = k % 2  # reszta z dzielenia przez dwa
-    tab = tab * 255  # alternatywny sposób uzyskania tablicy obrazu czarnobiałego ale w trybie odcieni szarości
-    return Image.fromarray(tab)  # tworzy obraz
-#rysuj_pasy_poziome(50,50,2).show()
 
 #Zad 2.2
 def rysuj_pasy_pionowe(w, h, grub):  # w, h   -  rozmiar obrazu
@@ -66,9 +53,17 @@ def rysuj_pasy_pionowe(w, h, grub):  # w, h   -  rozmiar obrazu
 #rysuj_pasy_pionowe(50,50,2).show()
 
 #Zad 2.3
-def rysuj_zygzak(w, h, grub):
+def rysuj_zygzak(w, h):
     t = (h, w)
-    tab = np.ones(t, dtype.uint8)
+    tab = np.ones(t, dtype=np.uint8)
 
     for k in range(w):
+    
+        if(k%20==)
+      tab[k-1,k-1]=0
+
+    tab = tab * 255  # alternatywny sposób uzyskania tablicy obrazu czarnobiałego ale w trybie odcieni szarości
+    return Image.fromarray(tab)  # tworzy obraz
+
+rysuj_zygzak(40,20).show()
          
