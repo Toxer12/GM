@@ -1,0 +1,36 @@
+Z pliku tablica.txt utwórz obraz w trybie '1'.  W odpowiedzi wklej polecenia, które prowadziły do utworzenia obrazu.
+
+Zastosuj do tego obrazu funkcję rysuj_ramke_w_obrazie(obraz, 50) oraz wstaw otrzymany obraz.
+///
+tabb = np.loadtxt("tablica.txt")
+ab1 = tabb.astype(np.bool_)
+img = Image.fromarray(ab1)
+/////////////
+Wykonaj funkcję rysuj_ramki(80, 130, 5). Zapisz obraz w formacie bmp.   Otwórz w Paint a następnie zapisz w formacie PNG. Pobierz informacje o otrzymanym obrazie i jego tablicy. 
+
+W odpowiedzi wpisz kolejno, oddzielając średnikiem następujące informacje:
+
+tryb obrazu; rozmiar obrazu; wymiar tablicy; liczba elementów tablicy
+///
+tryb RGBA; rozmiar (80, 130); miar tablicy: (130, 80, 4); liczba elementow: 41600
+//////////////////////////
+Zastosuj 2 razy funkcję wstaw_obraz_w_obraz(obraz_bazowy, obraz_wstawiany, m, n), gdzie 
+
+obraz_bazowy powstaje w wyniku funkcji rysuj_paski_pionowe(300, 200, 15)
+
+obraz_wstawiany  to inicjały własne (z lab1)
+
+1.  m = 250, n =100
+
+2.  m = 0, n = 50
+/////////////////
+Opisz wymagania oraz wklej kod funkcji  rysuj_wlasne. Utwórz obraz z własnej funkcji i wstaw.
+/////////////////
+Wykonaj funkcję rysuj_paski_pionowe(200, 100, 10). Zapisz obraz w formacie bmp.   Otwórz w Paint a następnie zapisz w formacie JPEG. Pobierz informacje o otrzymanym obrazie i jego tablicy. 
+
+W odpowiedzi wpisz kolejno, oddzielając średnikiem następujące informacje:
+
+tryb obrazu; wartość piksela (66,13); 66,13
+RGB; 0, 0, 0; 1, 1, 1
+//////////////////
+wstaw plik z kodem oraz wklej poniżej kod zawierający wszystkie funkcje wymagane w lab2.
