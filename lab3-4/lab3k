@@ -1,0 +1,133 @@
+from PIL import Image
+import  numpy as np
+from numpy.ma.core import asarray
+
+# ---------- wczytywanie obrazu zapisanego w różnych formatach .bmp, .jpg, .png oraz pobieranie informacji o obrazie  -------------------
+obrazek = Image.open("Inicjały.bmp")
+gwiazdka = Image.open("gwiazdka.bmp")# wczytywanie obrazu
+gwiazdka.save("gwiazdka.jpg")
+x = Image.open("gwiazdka.jpg")
+y = Image.open("testRGB.jpg")
+
+print("---------- informacje o obrazie")
+print("tryb:", y.mode)
+print("format:", y.format)
+print("rozmiar:", y.size)
+print("---------- informacje o obrazie")
+print("tryb:", obrazek.mode)
+print("format:", obrazek.format)
+print("rozmiar:", obrazek.size)
+# ---------- wczytywanie obrazu do tablicy oraz pobieranie informacji o tablicach ------------------------------
+
+dane_obrazka = np.asarray(obrazek)
+print("---------------- informacje o tablicy obrazu----------------")
+print("typ danych tablicy:", dane_obrazka.dtype)  # typ danych przechowywanych w tablicy
+print("rozmiar tablicy:", dane_obrazka.shape)
+
+def rysuj_pasy_poziome_szare(w, h, grub, zmiana_koloru):
+    t = (h, w)
+    tab = np.ones(t, dtype=np.uint8)
+    ile = int(h / grub)
+    for k in range(ile):
+        for g in range(grub):
+            i = k * grub + g
+            for j in range(w):
+                tab[i, j] = (k + zmiana_koloru) % 256
+    return Image.fromarray(tab)
+
+
+im_paski = rysuj_pasy_poziome_szare(100, 246, 1, 10).show()
+im_paski
+def koloruj_obraz(obraz, kolor):
+    t_obraz = np.asarray(obraz)
+    h, w = t_obraz.shape
+    t =(h, w, 3)
+    tab = np.ones(t, dtype=np.uint8)
+    for i in range(h):
+        for j in range(w):
+            if t_obraz[i, j] == False:
+                tab[i, j] = kolor
+            else:
+                tab[i, j] = [255, 255, 255]
+    return Image.fromarray(tab)
+
+
+obraz = koloruj_obraz(gwiazdka, [120, 240, 50])
+obraz.show()
+def negatyw(obraz):
+    if(obraz.mode == "RGB"):
+        t_obraz = np.asarray(obraz)
+        h, w, r = t_obraz.shape
+        tab_neg = t_obraz.copy()
+        for i in range(h):
+            for j in range(w):
+                tab_neg[i, j, 0] = 255 - t_obraz[i, j, 0]
+                tab_neg[i, j, 1] = 255 - t_obraz[i, j, 1]
+                tab_neg[i, j, 2] = 255 - t_obraz[i, j, 2]
+        return Image.fromarray(tab_neg)
+    elif(obraz.mode == "L"):
+        tab = np.asarray(obraz)
+        h, w = tab.shape
+        tab_neg = tab.copy()
+        for i in range(h):
+            for j in range(w):
+                tab_neg[i, j] = 255 - tab[i, j]
+        return Image.fromarray(tab_neg)
+    elif(obraz.mode == "1"):
+        tab = np.asarray(obraz)
+        h, w = tab.shape
+        tab_neg = tab.copy()
+        for i in range(h):
+            for j in range(w):
+                if(tab_neg[i, j] == 0):
+                    tab_neg[i, j] = tab[i, j] + 1
+                else:
+                    tab_neg[i, j] = tab[i, j] - 1
+        return Image.fromarray(tab_neg)
+    else:
+        return 0
+negatyw(obraz).show()
+
+def koloruj_obraz(obraz, kolor):
+    t_obraz = np.asarray(obraz)
+    h, w = t_obraz.shape
+    t =(h, w, 3)
+    tab = np.ones(t, dtype=np.uint8)
+    for i in range(h):
+        for j in range(w):
+            if t_obraz[i, j] == False:
+                tab[i, j] = kolor
+            else:
+                tab[i, j] = [255, 255, 255]
+    return Image.fromarray(tab)
+
+def koloruj_paski(obraz, grub):
+    tab1 = np.asarray(obraz)
+    h, w = tab1.shape
+    t = (h, w, 3)
+    tab = np.ones(t, dtype=np.uint8)
+
+    ile = int(h / grub)
+    for k in range(ile):
+        for g in range(grub):
+            i = k * grub + g
+            for j in range(w):
+                if tab1[i, j] == False:
+                    if k % 3 == 0:
+                        tab[i, j] = [255, 0, 0]
+                    elif k % 3 == 1:
+                        tab[i, j] = [0, 255, 0]
+                    else:
+                        tab[i, j] = [0, 0, 255]
+                else:
+                    tab[i, j] = [255, 255, 255]
+
+    return Image.fromarray(tab)
+
+koloruj_paski(obrazek,10).show()
+    #for i in range(0,h,grub):
+     #   for j in range(0,w,grub):
+      #      if tab1[i, j] == False:
+       #         tab[i, j] = [kolor, kolor1, kolor2] % 256
+        #    else:
+         #       tab[i, j] = [255, 255, 255]
