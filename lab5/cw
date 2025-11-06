@@ -1,0 +1,76 @@
+from PIL import Image
+import numpy as np
+from PIL import ImageStat as stat
+import matplotlib.pyplot as plt
+
+im = Image.open("ew.png")
+#print(im.mode)
+#print(im.format)
+
+#dodatkowe funkcje
+
+def statystyki(im):
+    s = stat.Stat(im)
+    print("extrema ", s.extrema)  # max i min
+    print("count ", s.count)  # zlicza
+    print("mean ", s.mean)  # srednia
+    print("rms ", s.rms)  # pierwiastek średniokwadratowy
+    print("median ", s.median)  # mediana
+    print("stddev ", s.stddev)  # odchylenie standardowe
+
+
+def rysuj_histogram_RGB(obraz):
+    hist = obraz.histogram()
+    plt.title("histogram  ")
+    plt.bar(range(256), hist[:256], color='r', alpha=0.5)
+    plt.bar(range(256), hist[256:2 * 256], color='g', alpha=0.4)
+    plt.bar(range(256), hist[2 * 256:], color='b', alpha=0.3)
+    return plt
+
+def rysuj_histogram_R(obraz):
+    hist = obraz.histogram()
+    plt.title("histogram  ")
+    plt.bar(range(256), hist[:256], color='r', alpha=0.5)
+    return plt
+
+def rysuj_histogram_G(obraz):
+    hist = obraz.histogram()
+    plt.title("histogram  ")
+    plt.bar(range(256), hist[256:2 * 256], color='g', alpha=0.4)
+    return plt
+
+def rysuj_histogram_B(obraz):
+    hist = obraz.histogram()
+    plt.title("histogram  ")
+    plt.bar(range(256), hist[2 * 256:], color='b', alpha=0.3)
+    return plt
+
+#Zad 1
+
+#statystyki(im)
+
+#Zad 1 a)
+
+rgb = rysuj_histogram_RGB(im)
+r = rysuj_histogram_R(im)
+g = rysuj_histogram_G(im)
+b = rysuj_histogram_B(im)
+
+
+plt.figure(figsize=(40, 40))
+plt.subplot(2,2,1) # ile obrazów w pionie, ile w poziomie, numer obrazu
+#rysuj_histogram_RGB(im)
+plt.axis('off')
+plt.subplot(2,2,2)
+rysuj_histogram_R(im)
+plt.axis('off')
+plt.subplot(2,2,3)
+rysuj_histogram_G(im)
+plt.axis('off')
+plt.subplot(2,2,4)
+rysuj_histogram_B(im)
+plt.axis('off')
+plt.subplots_adjust(wspace=0.05, hspace=0.05)
+plt.savefig('figura1.png')
+plt.show()
+
