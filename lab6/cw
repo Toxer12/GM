@@ -1,0 +1,48 @@
+import numpy as np
+from PIL import Image
+
+b1 = Image.open("beksinski.png")
+b2 = Image.open("beksinski1.png")
+b3 = Image.open("beksinski2.png")
+b4 = Image.open("beksinski3.png")
+
+#Zad 6
+def ocen_czy_indentyczne(obraz1, obraz2):
+
+    if obraz1.mode != obraz2.mode:
+        print("obrazy maja rozne tryby")
+        return
+    elif obraz1.size != obraz2.size:
+        print("obrazy maja rozny romiar")
+        return
+    elif np.array_equal(obraz1, obraz2) == False:
+        print("obrazy maja rozne kolory")
+        return
+    else:
+        print("obrazy sa takie same")
+    return
+"""
+ocen_czy_indentyczne(b1, b2)
+ocen_czy_indentyczne(b1, b3)
+ocen_czy_indentyczne(b1, b4)
+ocen_czy_indentyczne(b1, b1)
+"""
+
+#Zad 7
+
+#Zad 8
+
+#Zad 9
+def odkoduj(obraz1, obraz2):
+    t_obraz = np.asarray(obraz1)
+    t_zakodowany = np.asarray(obraz2)
+    h, w, d = t_obraz.shape
+    res = np.zeros((h, w))
+    for i in range(h):
+        for j in range(w):
+            for k in range(d):
+                if t_obraz[i, j, k] == t_zakodowany[i, j, k]:
+                    res[i, j] = 0
+                else:
+                    res[i, j] = 255
+    return res
