@@ -1,0 +1,52 @@
+from PIL import Image
+import  numpy as np
+from numpy.ma.core import asarray
+from PIL import ImageChops, ImageOps
+from PIL import ImageStat as stat
+import matplotlib.pyplot as plt
+
+# ---------- wczytywanie obrazu zapisanego w różnych formatach .bmp, .jpg, .png oraz pobieranie informacji o obrazie  -------------------
+obrazek = Image.open("img.png")
+gwiazdka = Image.open("gwiazdka.bmp")# wczytywanie obrazu
+#im = Image.open('baby_yoda.jpg')
+obraz = Image.open("kolorowe_cos.png")
+
+print("---------- informacje o obrazie")
+print("tryb:", obrazek.mode)
+print("format:", obrazek.format)
+print("rozmiar:", obrazek.size)
+def statystyki(im):
+    s = stat.Stat(im)
+    print("extrema ", s.extrema)  # max i min
+    print("count ", s.count)  # zlicza
+    print("mean ", s.mean)  # srednia
+    print("median ", s.median)  # mediana
+    print("stddev ", s.stddev)  # odchylenie standardowe
+statystyki(obrazek)
+szary = obrazek.convert('L')
+print("---------- informacje o obrazie")
+print("tryb:", szary.mode)
+print("format:", szary.format)
+print("rozmiar:", szary.size)
+statystyki(szary)
+hist = szary.histogram()
+plt.title("histogram  ")
+plt.bar(range(256), hist[:256], color='r', alpha=0.5)
+plt.show()
+obraz_eq = ImageOps.equalize(szary, mask=None)
+def hist_norm(obraz):
+    h, w = obraz.size
+    liczba_pikseli = h * w
+    hist = obraz.histogram()
+    hist_norm = []
+    for i in range(256):
+        hist_norm.append(hist[i] / liczba_pikseli)
+    plt.title("histogram norm")
+    plt.bar(range(256), hist_norm[:256], color='g', alpha=0.5)
+    plt.show()
+hist_norm(obraz_eq)
+def hist_kumul(obraz):
+    plt.title("histogram  ")
+    plt.bar(range(256), hist[:256], color='b', alpha=0.5)
+    plt.show()
+
