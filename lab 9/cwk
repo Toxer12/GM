@@ -1,0 +1,22 @@
+from PIL import Image
+from PIL import ImageFilter
+from PIL import ImageChops
+from PIL import ImageStat as stat
+import matplotlib.pyplot as plt
+
+def statystyki(im):
+    s = stat.Stat(im)
+    print("extrema ", s.extrema)  # max i min
+    print("count ", s.count)  # zlicza w*h
+    print("mean ", s.mean)  # srednia
+    print("rms ", s.rms)  # pierwiastek średniokwadratowy
+    print("median ", s.median)  # mediana
+    print("stddev ", s.stddev)  # odchylenie standardowe
+
+im = Image.open('kolorowe_cos.png')
+print("tryb obrazu", im.mode)
+print("rozmiar", im.size)
+
+def filtruj(obraz,kernel,scale):
+    obraz1 = obraz.copy
+    obraz1.filter(ImageFilter.Kernel(size=(3,3), kernel=kernel,scale=scale, offset=0))
