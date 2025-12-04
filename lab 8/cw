@@ -1,0 +1,63 @@
+from PIL import Image
+import numpy as np
+from PIL import ImageChops, ImageOps
+from PIL import ImageStat as stat
+import matplotlib.pyplot as plt
+
+#dodatkowe funkcje
+def statystyki(im):
+    s = stat.Stat(im)
+    print("extrema ", s.extrema)  # max i min
+    print("count ", s.count)  # zlicza
+    print("mean ", s.mean)  # srednia
+    print("median ", s.median)  # mediana
+    print("stddev ", s.stddev)  # odchylenie standardowe
+
+
+
+#zad 1
+obraz = Image.open("medyczny.jpg")
+#print(obraz.mode) #tryb rgb
+obraz = obraz.convert('L')
+#print(obraz.mode) #obraz w trybie L
+
+#Zad 2
+#statystyki(obraz)
+'''
+hist = obraz.histogram()
+plt.title("histogram ")
+plt.bar(range(256), hist[:], color='b', alpha=0.8)
+plt.show()
+'''
+
+#Zad 3
+def histogram_norm(obraz):
+    c = stat.Stat(obraz).count
+    hist = obraz.histogram()
+    for i in range(len(hist)):
+        #print(hist[i])
+        hist[i] = hist[i] / c[0]
+    plt.title("histogram ")
+    plt.bar(range(256), hist[:], color='b', alpha=0.8)
+    return plt
+
+#Zad 4
+def histogram_cumul(obraz):
+    c = stat.Stat(obraz).count
+    hist = obraz.histogram()
+    for i in range(len(hist)):
+        # print(hist[i])
+        hist[i] = hist[i] / c[0]
+
+    hist_kumul=[None]*256
+    for i in range(len(hist)):
+        wynik = 0
+        for j in range(i):
+            wynik = wynik + hist[j]
+        hist_kumul[i] = wynik
+
+    plt.title("histogram ")
+    plt.bar(range(256), hist_kumul[:], color='b', alpha=0.8)
+    return plt
+
+histogram_cumul(obraz).show()
