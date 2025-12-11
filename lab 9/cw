@@ -1,1 +1,41 @@
+import numpy as np
+from PIL import Image
+from PIL import ImageFilter
+from PIL import ImageChops
+from PIL import ImageStat as stat
+from numpy.ma.core import shape
+
+#import matplotlib.pyplot as plt
+
+#x**(1/2)
+
+obraz = Image.open("baby_yoda.jpg")
+
+#Zad 1
+def filtruj1(obraz, kernel, scale):
+    obraz_c = obraz.copy()
+    return obraz_c.filter(ImageFilter.Kernel(size = (3, 3), kernel = kernel, scale = scale))
+
+#filtruj1(obraz, [0, 3, 0, 0, 9, 0, 0, 3, 0], 2).show()
+
+def filtruj(obraz, kernel, scale):
+    obraz_c = obraz.copy()
+    w, h = obraz_c.size
+    tab = np.asarray(obraz_c, dtype = np.uint8)
+    tab = tab.copy()
+    w -= 2
+    h -= 2
+    k_s = len(kernel)
+    for i in range(h):
+        for j in range(w):
+            zmiana = 0
+            for f in range(k_s):
+                for g in range(k_s):
+                    zmiana = zmiana + (tab[i][j]*kernel[f][g])
+            tab[i+1][j+1] = zmiana
+    return Image.fromarray(tab)
+
+filtruj(obraz,np.asarray([[-1, -1, -1], [-1, 8, -1], [-1, -1, -1]]), 0).show()
+#print(np.asarray([[0, 3, 0], [0, 9, 0], [0, 3, 0]]))
+
 
