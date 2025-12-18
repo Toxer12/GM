@@ -1,1 +1,59 @@
+from PIL import Image
+import numpy as np
+import matplotlib.pyplot as plt
+from PIL import ImageFilter
+from PIL import ImageChops
+from PIL import ImageOps
+from PIL import ImageStat as stat
 
+postac = Image.open("postac.jpg")
+
+#Zad1
+w,h = postac.size
+s_w = 0.15 # skala zmiany rozmiaru w
+s_h = 0.27 # skala zmiany rozmiaru h
+w0 = int(w*s_w)
+h0 = int(h*s_h)
+postac_1 = im1 = postac.resize((w0,h0), 0, reducing_gap = None)
+postac_2 = im1 = postac.resize((w0,h0), 1, reducing_gap = None)
+postac_3 = im1 = postac.resize((w0,h0), 2, reducing_gap = None)
+postac_4 = im1 = postac.resize((w0,h0), 3, reducing_gap = None)
+postac_5 = im1 = postac.resize((w0,h0), 4, reducing_gap = None)
+postac_6 = im1 = postac.resize((w0,h0), 5, reducing_gap = None)
+
+postac_1_2 = ImageChops.difference(postac_1, postac_2)
+postac_1_3 = ImageChops.difference(postac_1, postac_3)
+postac_1_4 = ImageChops.difference(postac_1, postac_4)
+postac_1_5 = ImageChops.difference(postac_1, postac_5)
+postac_1_6 = ImageChops.difference(postac_1, postac_6)
+
+'''
+plt.figure(figsize=(40, 40), facecolor='Black')
+plt.subplot(3,4,1) # ile obrazów w pionie, ile w poziomie, numer obrazu
+plt.title("NEAREST", color='White')
+plt.imshow(postac_1)
+plt.axis('off')
+plt.subplot(3,4,2)
+plt.title("LANCZOS", color='White')
+plt.imshow(postac_2)
+plt.axis('off')
+plt.subplot(3,4,3)
+plt.title("BILINEAR", color='White')
+plt.imshow(postac_3)
+plt.axis('off')
+plt.subplot(3,4,4)
+plt.title("BICUBIC", color='White')
+plt.imshow(postac_4)
+plt.axis('off')
+plt.subplot(3,4,5)
+plt.title("BOX", color='White')
+plt.imshow(postac_5)
+plt.axis('off')
+plt.subplot(2,3,6)
+plt.title("HAMMING", color='White')
+plt.imshow(postac_6)
+plt.axis('off')
+plt.subplots_adjust(wspace=0.05, hspace=0.05)
+plt.savefig('fig1.png')
+plt.show()
+'''
